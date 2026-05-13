@@ -20,12 +20,6 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                bat 'docker build -t %IMAGE_NAME%:latest .'
-            }
-        }
-
         stage('Login to DockerHub') {
             steps {
                 withCredentials([usernamePassword(
@@ -38,6 +32,14 @@ pipeline {
             }
         }
 
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t %IMAGE_NAME%:latest .'
+            }
+        }
+
+        
         stage('Push Docker Image') {
             steps {
                 bat 'docker push %IMAGE_NAME%:latest'
